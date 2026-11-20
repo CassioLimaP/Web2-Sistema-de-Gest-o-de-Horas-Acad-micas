@@ -1,0 +1,11 @@
+/* Cores de cada status (usadas como class="badge status-<STATUS>") */
+.status-CRIADA                { background: #0dcaf0; color: #000; }
+.status-ENVIADA,
+.status-PARECER_PENDENTE      { background: #6c757d; color: #fff; }
+.status-AVALIADA,
+.status-AVALIADA_APOS_RECURSO { background: #0d6efd; color: #fff; }
+.status-ACEITA,
+.status-CONCLUIDO             { background: #198754; color: #fff; }
+.status-RECURSO,
+.status-RECURSO_COLEGIADO     { background: #ffc107; color: #000; }
+.status-CANCELADA             { background: #dc3545; color: #fff; }

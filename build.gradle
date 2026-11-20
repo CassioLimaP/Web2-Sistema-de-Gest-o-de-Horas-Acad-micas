@@ -1,0 +1,40 @@
+plugins {
+    id 'war'
+}
+
+group = 'br.ufrrj.si.web2'
+version = '1.0'
+
+repositories {
+    mavenCentral()
+}
+
+// O WAR sai como build/libs/sgha.war (contexto /sgha no Tomcat)
+war {
+    archiveFileName = 'sgha.war'
+}
+
+// Alvo Java 11: compatível com Tomcat 10.1 e com qualquer JDK >= 11 instalado.
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+    options.release = 11
+}
+
+dependencies {
+    // Fornecida pelo Tomcat (não entra no WAR)
+    compileOnly 'jakarta.servlet:jakarta.servlet-api:6.0.0'
+
+    // JSTL (jakarta.tags.*) precisa ir dentro do WAR: o Tomcat não a traz
+    implementation 'jakarta.servlet.jsp.jstl:jakarta.servlet.jsp.jstl-api:3.0.0'
+    implementation 'org.glassfish.web:jakarta.servlet.jsp.jstl:3.0.1'
+}
+
+// Executa a classe com main que valida o modelo (Entregável 2):  gradle testeDominio
+tasks.register('testeDominio', JavaExec) {
+    group = 'verification'
+    description = 'Roda TesteDominioSGHA (simulação do modelo sem servidor)'
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass = 'br.ufrrj.si.web2.util.TesteDominioSGHA'
+    jvmArgs '-Dfile.encoding=UTF-8'
+    standardOutput = System.out
+}
